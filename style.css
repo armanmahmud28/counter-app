@@ -1,0 +1,321 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0d0d0d;
+  --panel: #141414;
+  --border: #222;
+  --accent: #e8ff47;
+  --accent-dim: #b8cc2a;
+  --danger: #ff4747;
+  --text: #f0f0f0;
+  --muted: #555;
+  --glow: 0 0 40px rgba(232, 255, 71, 0.18);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Grid lines background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card */
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 56px 64px 48px;
+  text-align: center;
+  width: min(420px, 90vw);
+  box-shadow:
+    0 0 0 1px #1a1a1a,
+    0 32px 80px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s;
+}
+
+/* Accent corner marks */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--accent);
+  border-style: solid;
+}
+
+.card::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.card::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Label */
+.label {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* Number display */
+.display {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(7rem, 22vw, 9.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition:
+    color 0.15s,
+    text-shadow 0.15s;
+  user-select: none;
+  position: relative;
+}
+
+.display.bump {
+  animation: bump 0.18s ease-out;
+}
+
+.display.negative {
+  color: var(--danger);
+  text-shadow: 0 0 30px rgba(255, 71, 71, 0.3);
+}
+
+.display.zero {
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Step control */
+.step-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 22px 0 36px;
+}
+
+.step-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.step-input {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--accent);
+  font-family: "DM Mono", monospace;
+  font-size: 0.85rem;
+  width: 64px;
+  padding: 5px 10px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.step-input:focus {
+  border-color: var(--accent);
+}
+
+.step-input::-webkit-inner-spin-button,
+.step-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.step-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Main button row */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.btn {
+  all: unset;
+  cursor: pointer;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.1em;
+  padding: 18px 0;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: #1a1a1a;
+  color: var(--text);
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.1s,
+    color 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  background: #202020;
+  border-color: #333;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--inc:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(232, 255, 71, 0.1);
+}
+
+.btn--dec:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  box-shadow: 0 0 16px rgba(255, 71, 71, 0.1);
+}
+
+/* Ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-anim 0.5s linear;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+@keyframes ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Reset button */
+.btn--reset {
+  all: unset;
+  cursor: pointer;
+  width: 100%;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 0;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  text-align: center;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.btn--reset:hover {
+  color: var(--danger);
+  border-color: #2a1414;
+  background: #170d0d;
+}
+
+/* History */
+.history-title {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 28px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.history-bar {
+  display: flex;
+  gap: 4px;
+  height: 32px;
+  align-items: flex-end;
+}
+
+.history-bar .tick {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  transition:
+    height 0.3s ease,
+    background 0.3s;
+  min-height: 3px;
+}
+
+/* Keyboard hint */
+.hint {
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.hint kbd {
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-family: "DM Mono", monospace;
+  font-size: 0.55rem;
+  color: #888;
+}

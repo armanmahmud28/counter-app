@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card" id="card">
+      <p class="label">Counter</p>
+      <div class="display" id="display">0</div>
+
+      <div class="step-row">
+        <span class="step-label">Step</span>
+        <input
+          class="step-input"
+          type="number"
+          id="stepInput"
+          value="1"
+          min="1"
+        />
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn--dec" id="btnDec">− Decrease</button>
+        <button class="btn btn--inc" id="btnInc">+ Increase</button>
+      </div>
+
+      <button class="btn--reset" id="btnReset">↺ Reset to zero</button>
+
+      <p class="history-title">Recent changes</p>
+      <div class="history-bar" id="historyBar"></div>
+
+      <div class="hint">
+        <span><kbd>↑</kbd> increase</span>
+        <span><kbd>↓</kbd> decrease</span>
+        <span><kbd>R</kbd> reset</span>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
